@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <time.h>
 
-//int tb[4][13] = { 0 };
-
+/**
+ * Tạo dữ liệu, status
+ */
 void createData(int dt[4][13], int sta[4][13]) {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 13; j++) {
@@ -19,6 +20,9 @@ void createData(int dt[4][13], int sta[4][13]) {
 	}
 }
 
+/**
+ * Hien thi du lieu (full)
+ */
 void printData(int dt[4][13]) {
 	printf("===================================== Data ====================================\n\n");
 	for (int i = 0; i < 4; i++) {
@@ -30,6 +34,9 @@ void printData(int dt[4][13]) {
 	printf("\n=================================== ******* ===================================\n");
 }
 
+/**
+ * Hien thi bảng O - X
+ */
 void printTable(int dt[4][13]) {
 	printf("===================================== Data ====================================\n\n");
 	for (int i = 0; i < 4; i++) {
@@ -44,6 +51,11 @@ void printTable(int dt[4][13]) {
 	printf("\n=================================== ******* ===================================\n");
 }
 
+/**
+ * Hien thi du lieu o vi tri row, col
+ *
+ * @param arr[][], row1, col1, row2, col2.
+ */
 void printChoose(int dt[4][13], int r1, int c1, int r2, int c2) {
 	printf("===================================== Data ====================================\n\n");
 	for (int i = 0; i < 4; i++) {
@@ -63,12 +75,12 @@ int main()
 	srand((unsigned)time(NULL));
 	int tb[4][13] = { 0 };
 	int state[4][13] = { 0 };
-	int point = 0;
+	int count = 52;
 	int p1 = 0, p2 = 0;
 	int game = 0;
 	createData(tb, state);
 	printData(tb);
-	while (point < 10)
+	while (count > 0)
 	{
 		int r1, c1, r2, c2;
 		//printData(tb);
@@ -80,8 +92,7 @@ int main()
 		scanf("%d %d", &r2, &c2);
 		
 		if (tb[r1][c1] == tb[r2][c2]) {
-			//point += 2;
-			
+			count -= 2;
 			state[r1][c1] = state[r2][c2] = 1;
 			printf("%d point\n", game == 0 ? p1 += 2 : p2 += 2);
 		}
