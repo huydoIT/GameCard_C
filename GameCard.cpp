@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <time.h>
-
+#define LINE "\n====================================================================\n"
 int dt[4][13] = { 0 };
 /**
  * Tạo dữ liệu, status
@@ -19,7 +19,13 @@ void createData() {
 		}
 	}
 	for (int i = 0; i < 4; i++) {
-
+		for (int j = 0; j < 13; j++) {
+			int r = rand() % 3;
+			int c = rand() % 12;
+			int temp = dt[i][j];
+			dt[i][j] = dt[r][c];
+			dt[r][c] = temp;
+		}
 	}
 }
 
@@ -28,11 +34,17 @@ void createData() {
  */
 void displayData() {
 	printf("====================================== Data =====================================\n\n");
+	printf("  |");
+	for (int i = 0; i < 13; i++) {
+		printf("%3d |", i);
+	}
+	printf(LINE);
 	for (int i = 0; i < 4; i++) {
+		printf("%d||", i);
 		for (int j = 0; j < 13; j++) {
-			printf("%4d |", dt[i][j]);
+			printf("%3d |", dt[i][j]);
 		}
-		printf("\n");
+		printf("\n--------------------------------------------------------------------\n");
 	}
 	printf("\n=================================== ******* ===================================\n");
 }
@@ -43,12 +55,12 @@ void displayData() {
  * @param arr[][], row1, col1, row2, col2.
  */
 void display(int r1, int c1, int r2, int c2) {
-	printf("================================ Data ===============================\n\n");
+	printf("=============================== GAMES ==============================\n\n");
 	printf("  |");
 	for (int i = 0; i < 13; i++) {
 		printf("%3d |", i);
 	}
-	printf("\n--------------------------------------------------------------------\n");
+	printf(LINE);
 	for (int i = 0; i < 4; i++) {
 		printf("%d |", i);
 		for (int j = 0; j < 13; j++) {
@@ -63,7 +75,8 @@ void display(int r1, int c1, int r2, int c2) {
 		}
 		printf("\n--------------------------------------------------------------------\n");
 	}
-	printf("\n============================== ******* ==============================\n");
+	printf("\n");
+	//printf("\n============================== ******* ==============================\n");
 }
 int main()
 {
@@ -72,7 +85,7 @@ int main()
 	int p1 = 0, p2 = 0;
 	int game = 0;
 	createData();
-	displayData();
+	//displayData();
 	while (count > 0)
 	{
 		int r1, c1, r2, c2;
@@ -82,16 +95,17 @@ int main()
 		printf("%s", game == 0 ? "Player A\n" : "Player B\n");
 		printf("Input choose [1]: ");
 		scanf("%d %d", &r1, &c1);
+		display(r1, c1, -1, -1);
 		printf("Input choose [2]: ");
 		scanf("%d %d", &r2, &c2);
-		
+		display(-1, -1, r2, c2);
+
 		if (dt[r1][c1] == dt[r2][c2]) {
 			count -= 2;
 			dt[r1][c1] = dt[r2][c2] = -1;
 			printf("%d point\n", game == 0 ? p1 += 2 : p2 += 2);
 		}
 		else {
-			display(r1, c1, r2, c2);
 			printf("Sorry!\n");
 			game == 0 ? game = 1 : game = 0;
 		}
