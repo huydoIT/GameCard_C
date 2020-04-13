@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #define LINE "\n====================================================================\n"
+#define getPlayer(state) (state == 0 ? 'A' : 'B')
 int dt[4][13] = { 0 };
 /**
  * Tạo dữ liệu, status
@@ -81,6 +82,16 @@ void display(int r1, int c1, int r2, int c2) {
 	printf("\n");
 }
 
+int isValid(int row, int col) {
+	if (dt[row][col] == -1) {
+		return 1;
+	}
+	else if ((row < 0 || row > 3) || (col < 0 || col > 12)) {
+		return 1;
+	}
+	return 0;
+}
+
 int main()
 {
 	srand((unsigned)time(NULL));
@@ -88,28 +99,37 @@ int main()
 	int p1 = 0, p2 = 0;
 	int game = 0;
 	createData();
-	//displayData();
+	displayData();
 	while (count > 0)
 	{
 		int r1, c1, r2, c2;
 		//system("cls");
 		display(-1, -1, -1, -1);
 		printf("%s", game == 0 ? "Player A\n" : "Player B\n");
-		printf("Input choose [1]: ");
-		scanf("%d %d", &r1, &c1);
+		do {
+			printf("Input choose [1]: ");
+			scanf("%d %d", &r1, &c1);
+			if (isValid(r1, c1) == 1) {
+				printf("Choosed not valid! Try again.\n");
+			}
+		} while (isValid(r1, c1) == 1);
 		display(r1, c1, -1, -1);
-		printf("Input choose [2]: ");
-		scanf("%d %d", &r2, &c2);
+		do {
+			printf("Input choose [2]: ");
+			scanf("%d %d", &r2, &c2);
+			if (isValid(r2, c2) == 1) {
+				printf("Choosed not valid! Try again.\n");
+			}
+		} while (isValid(r2, c2) == 1);
 		display(-1, -1, r2, c2);
 
 		if (dt[r1][c1] == dt[r2][c2]) {
 			count -= 2;
 			dt[r1][c1] = dt[r2][c2] = -1;
-			printf("%d point\n", game == 0 ? p1 += 2 : p2 += 2);
+			printf("Player%c %d point\n", getPlayer(game) , game == 0 ? p1 += 2 : p2 += 2);
 		}
 		else {
 			printf("Sorry!\n\n");
-			//Sleep(3000);
 			game == 0 ? game = 1 : game = 0;
 		}
 	}
