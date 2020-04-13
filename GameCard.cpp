@@ -61,12 +61,12 @@ void displayData() {
 void display(int r1, int c1, int r2, int c2) {
 	printf("=============================== GAMES ==============================\n\n");
 	printf("  |");
-	for (int i = 0; i < 13; i++) {
+	for (int i = 1; i <= 13; i++) {
 		printf("%3d |", i);
 	}
 	printf(LINE);
 	for (int i = 0; i < 4; i++) {
-		printf("%d |", i);
+		printf("%d |", i + 1);
 		for (int j = 0; j < 13; j++) {
 			if (((i == r1)&&(j==c1)) || ((i == r2) && (j == c2))) {
 				printf("%3d |", dt[i][j]);
@@ -109,6 +109,7 @@ int main()
 		do {
 			printf("Input choose [1]: ");
 			scanf("%d %d", &r1, &c1);
+			r1 -= 1; c1 -= 1;
 			if (isValid(r1, c1) == 1) {
 				printf("Choosed not valid! Try again.\n");
 			}
@@ -117,6 +118,7 @@ int main()
 		do {
 			printf("Input choose [2]: ");
 			scanf("%d %d", &r2, &c2);
+			r2 -= 1; c2 -= 1;
 			if (isValid(r2, c2) == 1) {
 				printf("Choosed not valid! Try again.\n");
 			}
